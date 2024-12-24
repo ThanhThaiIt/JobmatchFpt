@@ -283,3 +283,4 @@
 /Users/thanh/Downloads/ApplicationDevelopment-2/ApplicationDevelopment.WebMVC/obj/Debug/net8.0/ApplicationDevelopment.WebMVC.pdb
 /Users/thanh/Downloads/ApplicationDevelopment-2/ApplicationDevelopment.WebMVC/obj/Debug/net8.0/ApplicationDevelopment.WebMVC.genruntimeconfig.cache
 /Users/thanh/Downloads/ApplicationDevelopment-2/ApplicationDevelopment.WebMVC/obj/Debug/net8.0/ref/ApplicationDevelopment.WebMVC.dll
+/Users/thanh/Downloads/ApplicationDevelopment-2/ApplicationDevelopment.WebMVC/obj/Debug/net8.0/ApplicationDevelopment.WebMVC.sourcelink.json
