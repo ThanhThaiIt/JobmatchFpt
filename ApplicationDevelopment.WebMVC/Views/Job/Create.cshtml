@@ -8,156 +8,160 @@
     var buttonName = isCreate ? "Create" : "Update";
 }
 
-<h1>Create a job</h1>
-<button type="button" onclick="openModalCreateJobType();">Create a job type</button>
-<hr />
+<!-- Christmas-themed title -->
+<h1 style="color: #ff0000; font-family: 'Snowburst One', cursive; text-align: center;">
+    🎄 Create a Job 🎅
+</h1>
+<button type="button" class="btn btn-primary" onclick="openModalCreateJobType();" style="background-color: #008000; border-color: #008000; margin-bottom: 20px;">
+    Create a Job Type
+</button>
+<hr style="border-color: #ff0000; border-width: 2px;" />
+
 <div class="row">
-    <div class="col-md-4">
-        @* <form asp-controller="Job" asp-action="Create"> *@
+    <!-- Christmas-themed form -->
+    <div class="col-md-4" style="background-color: rgba(255, 255, 255, 0.9); padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px rgba(0,0,0,0.2);">
         <form asp-action="@actionString">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input asp-for="Id" type="hidden" class="form-control" />
 
-            <div id="announcement">@ViewData[ViewBags.ANNOUNCEMENT]</div>
+            <div id="announcement" style="color: #ff0000;">@ViewData[ViewBags.ANNOUNCEMENT]</div>
 
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+                <label asp-for="Name" class="control-label" style="color: #008000;"></label>
+                <input asp-for="Name" class="form-control" style="background-color: rgba(255,255,255,0.9);" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <textarea asp-for="Description" class="form-control"></textarea>
+                <label asp-for="Description" class="control-label" style="color: #008000;"></label>
+                <textarea asp-for="Description" class="form-control" style="background-color: rgba(255,255,255,0.9);"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-
             <div class="form-group">
-                <label asp-for="Requirements" class="control-label"></label>
-                <textarea asp-for="Requirements" class="form-control"></textarea>
+                <label asp-for="Requirements" class="control-label" style="color: #008000;"></label>
+                <textarea asp-for="Requirements" class="form-control" style="background-color: rgba(255,255,255,0.9);"></textarea>
                 <span asp-validation-for="Requirements" class="text-danger"></span>
             </div>
-
             <div class="form-group">
-                <label asp-for="JobTypeId" class="control-label">Job Type</label>
-                <select asp-for="JobTypeId" asp-items="ViewBag.JobTypes" class="form-control"></select>
+                <label asp-for="JobTypeId" class="control-label" style="color: #008000;">Job Type</label>
+                <select asp-for="JobTypeId" asp-items="ViewBag.JobTypes" class="form-control" style="background-color: rgba(255,255,255,0.9);"></select>
                 <span asp-validation-for="JobTypeId" class="text-danger"></span>
             </div>
 
             <div class="form-group" style="text-align: center;">
-                <input type="submit" value="@buttonName" class="btn btn-primary" />
+                <input type="submit" value="@buttonName" class="btn btn-primary" style="background-color: #ff0000; border-color: #ff0000; color: #fff;" />
+                <p style="color: #ff0000; margin-top: 10px;">🎄 Merry Christmas! 🎄</p>
             </div>
         </form>
     </div>
 
-    <div id="divJobList" class="col-md-8">
-        <h3>Danh sách công việc đã tạo</h3>
+    <!-- Christmas-themed job list -->
+    <div id="divJobList" class="col-md-8" style="background-color: rgba(255, 255, 255, 0.9); padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px rgba(0,0,0,0.2);">
+        <h2 style="text-align: center; color: #ff0000;">Job List 🎅</h2>
         @await Component.InvokeAsync("JobList")
     </div>
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-    <script>
-          // let buttonOpenModal = document.getElementById("buttonOpenModal");
-          // const modalSizes = {
-          //     small: "modal-sm",
-          //     medium: "",
-          //     large: "modal-lg",
-          //     extraLarge: "modal-xl",
-          // }
-        document.addEventListener("DOMContentLoaded", () => {
-            // openModal("Title", "Test thử nghiệm");
-            // openModal("Title", "Test thử nghiệm", modalSizes.extraLarge);
-        });
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Add any initializations if needed
+    });
 
-        
-        function openModalCreateJobType(){
-            $.ajax({
-                type: "GET",
-                url: '@Url.Action("Create", "JobType")',
-                // cache: false,
-                // dataType: "json",
-                // data: {},
-                complete: function () {
-                    
-                },
-                success: function (data, textStatus, XMLHttpRequest) {
-                    openModal("Job Type", data, modalSizes.large);
-                },
-                error: function (error) {
-                    // ???
-                },
-            });
-        }
-        function createJobType(){
-            let formJobType = document.getElementById("formJobType");
-            let jobTypeData;
-            if(formJobType) {
-                let inputId = formJobType.querySelector("input[Id='Id']");
-                let inputName = formJobType.querySelector("input[Id='Name']");
-                let textareaDescription = formJobType.querySelector("textarea[Id='Description']");
-                jobTypeData = {
-                    id: inputId.value,
-                    name: inputName.value,
-                    description: textareaDescription.value
-                }
+    function openModalCreateJobType() {
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("Create", "JobType")',
+            success: function (data) {
+                openModal("Job Type", data, "modal-lg");
+            },
+            error: function (error) {
+                console.error("Error fetching job type creation modal: ", error);
             }
-            $.ajax({
-                type: "POST",
-                url: '@Url.Action("Create", "JobType")',
-                data: {jobTypeVM: jobTypeData},
-                complete: function () {
-                    //=== Đóng Modal lại ===//
-                    closeModal();
-                    //TODO:=== Refresh danh sách Job Type===//
-                },
-                success: function (response) {
-                  console.log("Response: ", response.message);  
-                },
-                error: function (error) {
-                    // ???
-                },
-            });
-        }
-        function deleteJob(idJob){
-            $.ajax({
-                type: "POST",
-                url: '@Url.Action("Delete", "Job")',
-                data: { idJob },
-                complete: function () {
-                    //TODO:=== Refresh danh sách Job ===//
-                    reloadJobList();
-                },
-                success: function (response) {
-                  console.log("Response: ", response.message);
-                  console.log("StatusCode: ", response.statusCode);
-                },
-                error: function (error) {
-                    // ???
-                },
-            });
-        }
+        });
+    }
 
-        function reloadJobList(){
-            $.ajax({
-                type: "GET",
-                url: '@Url.Action("GetAll", "Job")',
-                // data: { idJob: idJob},
-                complete: function () {
+    function createJobType() {
+        let formJobType = document.getElementById("formJobType");
+        if (!formJobType) return;
 
-                },
-                success: function (response) {
-                  let divJobList = document.getElementById("divJobList");
-                  if(divJobList){
-                      divJobList.innerHTML = response;
-                  }
-                },
-                error: function (error) {
-                    // ???
-                },
-            });
-        }
-    </script>
+        let jobTypeData = {
+            id: formJobType.querySelector("input[id='Id']").value,
+            name: formJobType.querySelector("input[id='Name']").value,
+            description: formJobType.querySelector("textarea[id='Description']").value
+        };
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("Create", "JobType")',
+            data: { jobTypeVM: jobTypeData },
+            success: function (response) {
+                console.log("Job Type Created:", response);
+                closeModal();
+                reloadJobTypeList();
+            },
+            error: function (error) {
+                console.error("Error creating job type:", error);
+            }
+        });
+    }
+
+    function deleteJob(idJob) {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("Delete", "Job")',
+            data: { idJob: idJob },
+            success: function (response) {
+                console.log("Job deleted: ", response);
+                reloadJobList();
+            },
+            error: function (error) {
+                console.error("Error deleting job:", error);
+            }
+        });
+    }
+
+    function reloadJobList() {
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetAll", "Job")',
+            success: function (response) {
+                document.getElementById("divJobList").innerHTML = response;
+            },
+            error: function (error) {
+                console.error("Error reloading job list: ", error);
+            }
+        });
+    }
+
+    function reloadJobTypeList() {
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetAll", "JobType")',
+            success: function (response) {
+                // Handle the response for reloading job types list if needed
+                console.log("Job Type list updated.");
+            },
+            error: function (error) {
+                console.error("Error reloading job type list: ", error);
+            }
+        });
+    }
+</script>
 }
+
+<!-- Christmas-themed background -->
+<style>
+    body {
+        background: url('https://hoanghamobile.com/tin-tuc/wp-content/uploads/2024/07/hinh-anh-giang-sinh-cute.jpg') no-repeat center center fixed;
+        background-size: cover;
+        color: #fff;
+    }
+    .form-control {
+        border: 1px solid #ff0000;
+    }
+    .btn-primary:hover {
+        background-color: #008000;
+        border-color: #008000;
+    }
+</style>
