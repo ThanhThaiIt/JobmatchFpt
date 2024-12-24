@@ -2,18 +2,82 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-center fall-title-container">
+    <h1 class="display-4 fall-title">Welcome</h1>
+    <p class="fall-paragraph">
+        Learn about <a href="https://learn.microsoft.com/aspnet/core" class="fall-link">building Web apps with ASP.NET Core</a>.
+    </p>
 </div>
+
+<hr />
 
 <div class="row">
     <div class="col-md-6 col-sm-12">
-        <h3>Danh sách công việc đã tạo</h3>
-        @await Component.InvokeAsync("JobList", new { isForHome = true })
+        <h3 class="fall-section-title">Danh sách công việc đã tạo</h3>
+        <div class="fall-card">
+            @await Component.InvokeAsync("JobList", new { isForHome = true })
+        </div>
     </div>
     <div class="col-md-6 col-sm-12">
-        <h3>Danh sách loại công việc</h3>
-        @await Component.InvokeAsync("JobTypeList")
+        <h3 class="fall-section-title">Danh sách loại công việc</h3>
+        <div class="fall-card">
+            @await Component.InvokeAsync("JobTypeList")
+        </div>
     </div>
 </div>
+
+<style>
+    /* Màu sắc và phong cách mùa thu */
+    body {
+        background-color: #FFF4E6;
+        color: #4F4F4F;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .fall-title-container {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .fall-title {
+        color: #D96C38;
+        font-size: 2.5rem;
+    }
+
+    .fall-paragraph {
+        color: #4F4F4F;
+        font-size: 1.2rem;
+    }
+
+    .fall-link {
+        color: #D96C38;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .fall-link:hover {
+        text-decoration: underline;
+        color: #D48F56;
+    }
+
+    .fall-section-title {
+        color: #D96C38;
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+
+    .fall-card {
+        background-color: #FFE8C2;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    hr {
+        border-top: 2px solid #D96C38;
+    }
+
+    .row {
+        margin-top: 20px;
+    }
+</style>

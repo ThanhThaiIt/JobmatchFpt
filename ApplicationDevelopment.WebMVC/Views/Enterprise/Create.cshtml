@@ -7,53 +7,109 @@
     string actionName = isCreate ? "Create" : "Edit";
 }
 
-<h1>Create Enterprise</h1>
+<h1 class="fall-title">Create Enterprise</h1>
 
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="@actionName">
+        <form asp-action="@actionName" class="fall-form">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input asp-for="Id" type="hidden" class="form-control" />
 
-
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+                <input asp-for="Name" class="form-control fall-input" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Address" class="control-label"></label>
-                <input asp-for="Address" class="form-control" />
+                <input asp-for="Address" class="form-control fall-input" />
                 <span asp-validation-for="Address" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
+                <input asp-for="Email" class="form-control fall-input" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Hotline" class="control-label"></label>
-                <input asp-for="Hotline" class="form-control" />
+                <input asp-for="Hotline" class="form-control fall-input" />
                 <span asp-validation-for="Hotline" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="TaxNumber" class="control-label"></label>
-                <input asp-for="TaxNumber" class="form-control" />
+                <input asp-for="TaxNumber" class="form-control fall-input" />
                 <span asp-validation-for="TaxNumber" class="text-danger"></span>
             </div>
 
             <div class="form-group" style="text-align: center">
-                <input type="submit" value="@buttonName" class="btn btn-primary" />
+                <input type="submit" value="@buttonName" class="btn btn-primary fall-button" />
             </div>
         </form>
     </div>
     <div class="col-md-8">
         @await Component.InvokeAsync("EnterpriseList")
-        </div>
     </div>
-
+</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+<style>
+    /* Màu sắc và phong cách mùa thu */
+    body {
+        background-color: #FFF4E6;
+        color: #4F4F4F;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .fall-title {
+        color: #D96C38;
+        font-size: 2.5rem;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .fall-form {
+        background-color: #FFE8C2;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .fall-input {
+        background-color: #F5D2A2;
+        border: 1px solid #D96C38;
+        color: #4F4F4F;
+        border-radius: 5px;
+    }
+
+    .fall-button {
+        background-color: #D96C38;
+        color: white;
+        font-size: 1.2rem;
+        padding: 10px 20px;
+        border-radius: 5px;
+    }
+
+    .fall-button:hover {
+        background-color: #D48F56;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .text-danger {
+        color: #E74C3C;
+    }
+
+    hr {
+        border-top: 2px solid #D96C38;
+    }
+</style>

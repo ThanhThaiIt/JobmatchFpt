@@ -2,19 +2,20 @@
 @model ApplicationDevelopment.WebMVC.Models.JobViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Job";
     var isCreate = Model == null || Model.Id == Guid.Empty;
-    var actionString = isCreate ? "Create" : "Edit";
     var buttonName = isCreate ? "Create" : "Update";
+    var actionName = isCreate ? "Create" : "Edit";
 }
 
-<h1>Create a job</h1>
-<button type="button" onclick="openModalCreateJobType();">Create a job type</button>
+<h1 class="fall-title">Create Job</h1>
+
+<button type="button" class="btn fall-button" onclick="openModalCreateJobType();">Create Job Type</button>
+
 <hr />
 <div class="row">
     <div class="col-md-4">
-        @* <form asp-controller="Job" asp-action="Create"> *@
-        <form asp-action="@actionString">
+        <form asp-action="@actionName" class="fall-form">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input asp-for="Id" type="hidden" class="form-control" />
 
@@ -22,142 +23,113 @@
 
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+                <input asp-for="Name" class="form-control fall-input" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <textarea asp-for="Description" class="form-control"></textarea>
+                <textarea asp-for="Description" class="form-control fall-input"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label asp-for="Requirements" class="control-label"></label>
-                <textarea asp-for="Requirements" class="form-control"></textarea>
+                <textarea asp-for="Requirements" class="form-control fall-input"></textarea>
                 <span asp-validation-for="Requirements" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label asp-for="JobTypeId" class="control-label">Job Type</label>
-                <select asp-for="JobTypeId" asp-items="ViewBag.JobTypes" class="form-control"></select>
+                <select asp-for="JobTypeId" asp-items="ViewBag.JobTypes" class="form-control fall-input"></select>
                 <span asp-validation-for="JobTypeId" class="text-danger"></span>
             </div>
 
             <div class="form-group" style="text-align: center;">
-                <input type="submit" value="@buttonName" class="btn btn-primary" />
+                <input type="submit" value="@buttonName" class="btn fall-button" />
             </div>
         </form>
     </div>
 
-    <div id="divJobList" class="col-md-8">
-        <h3>Danh sách công việc đã tạo</h3>
+    <div class="col-md-8">
+        <h3 class="fall-title">Danh sách công việc đã tạo</h3>
         @await Component.InvokeAsync("JobList")
     </div>
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
     <script>
-          // let buttonOpenModal = document.getElementById("buttonOpenModal");
-          // const modalSizes = {
-          //     small: "modal-sm",
-          //     medium: "",
-          //     large: "modal-lg",
-          //     extraLarge: "modal-xl",
-          // }
         document.addEventListener("DOMContentLoaded", () => {
-            // openModal("Title", "Test thử nghiệm");
-            // openModal("Title", "Test thử nghiệm", modalSizes.extraLarge);
+            // Khởi tạo khi trang được tải
         });
 
-        
-        function openModalCreateJobType(){
+        function openModalCreateJobType() {
             $.ajax({
                 type: "GET",
                 url: '@Url.Action("Create", "JobType")',
-                // cache: false,
-                // dataType: "json",
-                // data: {},
-                complete: function () {
-                    
-                },
-                success: function (data, textStatus, XMLHttpRequest) {
+                success: function (data) {
                     openModal("Job Type", data, modalSizes.large);
                 },
-                error: function (error) {
-                    // ???
-                },
-            });
-        }
-        function createJobType(){
-            let formJobType = document.getElementById("formJobType");
-            let jobTypeData;
-            if(formJobType) {
-                let inputId = formJobType.querySelector("input[Id='Id']");
-                let inputName = formJobType.querySelector("input[Id='Name']");
-                let textareaDescription = formJobType.querySelector("textarea[Id='Description']");
-                jobTypeData = {
-                    id: inputId.value,
-                    name: inputName.value,
-                    description: textareaDescription.value
+                error: function () {
+                    console.error("Error opening modal for Job Type.");
                 }
-            }
-            $.ajax({
-                type: "POST",
-                url: '@Url.Action("Create", "JobType")',
-                data: {jobTypeVM: jobTypeData},
-                complete: function () {
-                    //=== Đóng Modal lại ===//
-                    closeModal();
-                    //TODO:=== Refresh danh sách Job Type===//
-                },
-                success: function (response) {
-                  console.log("Response: ", response.message);  
-                },
-                error: function (error) {
-                    // ???
-                },
-            });
-        }
-        function deleteJob(idJob){
-            $.ajax({
-                type: "POST",
-                url: '@Url.Action("Delete", "Job")',
-                data: { idJob },
-                complete: function () {
-                    //TODO:=== Refresh danh sách Job ===//
-                    reloadJobList();
-                },
-                success: function (response) {
-                  console.log("Response: ", response.message);
-                  console.log("StatusCode: ", response.statusCode);
-                },
-                error: function (error) {
-                    // ???
-                },
-            });
-        }
-
-        function reloadJobList(){
-            $.ajax({
-                type: "GET",
-                url: '@Url.Action("GetAll", "Job")',
-                // data: { idJob: idJob},
-                complete: function () {
-
-                },
-                success: function (response) {
-                  let divJobList = document.getElementById("divJobList");
-                  if(divJobList){
-                      divJobList.innerHTML = response;
-                  }
-                },
-                error: function (error) {
-                    // ???
-                },
             });
         }
     </script>
 }
+
+<style>
+    body {
+        background-color: #FFF4E6;
+        color: #4F4F4F;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .fall-title {
+        color: #D96C38;
+        font-size: 2rem;
+        text-align: center;
+        margin: 20px 0;
+    }
+
+    .fall-form {
+        background-color: #FFE8C2;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .fall-input {
+        background-color: #F5D2A2;
+        border: 1px solid #D96C38;
+        color: #4F4F4F;
+        border-radius: 5px;
+    }
+
+    .fall-button {
+        background-color: #D96C38;
+        color: white;
+        font-size: 1.2rem;
+        padding: 10px 20px;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+
+    .fall-button:hover {
+        background-color: #D48F56;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .text-danger {
+        color: #E74C3C;
+    }
+
+    hr {
+        border-top: 2px solid #D96C38;
+    }
+</style>
