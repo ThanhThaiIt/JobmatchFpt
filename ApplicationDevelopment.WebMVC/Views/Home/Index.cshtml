@@ -2,6 +2,63 @@
     ViewData["Title"] = "Home Page";
 }
 
+<style>
+    /* Nền và màu sắc */
+    body {
+        background-color: #f0f8ff; /* Nền xanh nhạt giống màu trời mùa hè */
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .text-center h1 {
+        color: #ff6347; /* Màu cam cho tiêu đề */
+        font-size: 3rem;
+    }
+
+    .text-center p {
+        font-size: 1.25rem;
+        color: #ff7f50; /* Màu cam sáng */
+    }
+
+    .text-center a {
+        color: #ff4500; /* Màu cam đậm cho liên kết */
+        font-weight: bold;
+    }
+
+    .text-center a:hover {
+        color: #ff6347; /* Màu cam khi hover */
+    }
+
+    .row {
+        margin-top: 30px;
+    }
+
+    .col-md-6, .col-sm-12 {
+        padding: 20px;
+        background-color: #ffffff; /* Nền trắng cho các cột */
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+
+    .col-md-6 h3 {
+        color: #ff4500; /* Màu cam cho tiêu đề trong mỗi cột */
+        font-size: 1.75rem;
+    }
+
+    /* Thêm hiệu ứng cho các phần tử */
+    .col-md-6:hover {
+        transform: scale(1.02);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    /* Thêm hình ảnh nền nhẹ */
+    .row {
+        background-image: url('https://www.example.com/summer-bg.jpg'); /* Thêm hình nền mùa hè */
+        background-size: cover;
+        background-position: center;
+    }
+</style>
+
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>

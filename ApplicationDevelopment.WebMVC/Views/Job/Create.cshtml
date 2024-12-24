@@ -8,12 +8,11 @@
     var buttonName = isCreate ? "Create" : "Update";
 }
 
-<h1>Create a job</h1>
-<button type="button" onclick="openModalCreateJobType();">Create a job type</button>
+<h1 class="summer-heading">Create a Job</h1>
+<button type="button" onclick="openModalCreateJobType();" class="btn btn-summer">Create a Job Type</button>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        @* <form asp-controller="Job" asp-action="Create"> *@
         <form asp-action="@actionString">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input asp-for="Id" type="hidden" class="form-control" />
@@ -44,7 +43,7 @@
             </div>
 
             <div class="form-group" style="text-align: center;">
-                <input type="submit" value="@buttonName" class="btn btn-primary" />
+                <input type="submit" value="@buttonName" class="btn btn-primary btn-summer" />
             </div>
         </form>
     </div>
@@ -60,104 +59,120 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     <script>
-          // let buttonOpenModal = document.getElementById("buttonOpenModal");
-          // const modalSizes = {
-          //     small: "modal-sm",
-          //     medium: "",
-          //     large: "modal-lg",
-          //     extraLarge: "modal-xl",
-          // }
         document.addEventListener("DOMContentLoaded", () => {
-            // openModal("Title", "Test thử nghiệm");
-            // openModal("Title", "Test thử nghiệm", modalSizes.extraLarge);
+            // Add any initializations if needed
         });
 
-        
-        function openModalCreateJobType(){
+        function openModalCreateJobType() {
             $.ajax({
                 type: "GET",
                 url: '@Url.Action("Create", "JobType")',
-                // cache: false,
-                // dataType: "json",
-                // data: {},
-                complete: function () {
-                    
-                },
-                success: function (data, textStatus, XMLHttpRequest) {
-                    openModal("Job Type", data, modalSizes.large);
+                success: function (data) {
+                    openModal("Job Type", data, "modal-lg");
                 },
                 error: function (error) {
-                    // ???
-                },
+                    console.error("Error fetching job type creation modal: ", error);
+                }
             });
         }
-        function createJobType(){
+
+        function createJobType() {
             let formJobType = document.getElementById("formJobType");
-            let jobTypeData;
-            if(formJobType) {
-                let inputId = formJobType.querySelector("input[Id='Id']");
-                let inputName = formJobType.querySelector("input[Id='Name']");
-                let textareaDescription = formJobType.querySelector("textarea[Id='Description']");
-                jobTypeData = {
-                    id: inputId.value,
-                    name: inputName.value,
-                    description: textareaDescription.value
-                }
-            }
+            if (!formJobType) return;
+
+            let jobTypeData = {
+                id: formJobType.querySelector("input[id='Id']").value,
+                name: formJobType.querySelector("input[id='Name']").value,
+                description: formJobType.querySelector("textarea[id='Description']").value
+            };
+
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("Create", "JobType")',
-                data: {jobTypeVM: jobTypeData},
-                complete: function () {
-                    //=== Đóng Modal lại ===//
-                    closeModal();
-                    //TODO:=== Refresh danh sách Job Type===//
-                },
+                data: { jobTypeVM: jobTypeData },
                 success: function (response) {
-                  console.log("Response: ", response.message);  
+                    console.log("Job Type Created:", response);
+                    closeModal();
+                    reloadJobTypeList();
                 },
                 error: function (error) {
-                    // ???
-                },
+                    console.error("Error creating job type:", error);
+                }
             });
         }
-        function deleteJob(idJob){
+
+        function deleteJob(idJob) {
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("Delete", "Job")',
-                data: { idJob },
-                complete: function () {
-                    //TODO:=== Refresh danh sách Job ===//
+                data: { idJob: idJob },
+                success: function (response) {
+                    console.log("Job deleted: ", response);
                     reloadJobList();
                 },
-                success: function (response) {
-                  console.log("Response: ", response.message);
-                  console.log("StatusCode: ", response.statusCode);
-                },
                 error: function (error) {
-                    // ???
-                },
+                    console.error("Error deleting job:", error);
+                }
             });
         }
 
-        function reloadJobList(){
+        function reloadJobList() {
             $.ajax({
                 type: "GET",
                 url: '@Url.Action("GetAll", "Job")',
-                // data: { idJob: idJob},
-                complete: function () {
-
-                },
                 success: function (response) {
-                  let divJobList = document.getElementById("divJobList");
-                  if(divJobList){
-                      divJobList.innerHTML = response;
-                  }
+                    document.getElementById("divJobList").innerHTML = response;
                 },
                 error: function (error) {
-                    // ???
+                    console.error("Error reloading job list: ", error);
+                }
+            });
+        }
+
+        function reloadJobTypeList() {
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("GetAll", "JobType")',
+                success: function (response) {
+                    // Handle the response for reloading job types list if needed
+                    console.log("Job Type list updated.");
                 },
+                error: function (error) {
+                    console.error("Error reloading job type list: ", error);
+                }
             });
         }
     </script>
 }
+
+<style>
+    body {
+        background-color: #f0f8ff; /* Màu nền sáng, dễ chịu */
+    }
+
+    .summer-heading {
+        color: #ff6347; /* Màu cam, tạo cảm giác mùa hè */
+    }
+
+    .btn-summer {
+        background-color: #ffb6c1; /* Màu hồng pastel */
+        color: white;
+    }
+
+    .btn-summer:hover {
+        background-color: #ff69b4; /* Màu hồng đậm khi hover */
+    }
+
+    .form-control {
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group label {
+        font-weight: bold;
+    }
+
+    .modal-content {
+        border-radius: 10px;
+    }
+</style>
