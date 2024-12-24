@@ -27,14 +27,22 @@ namespace ApplicationDevelopment.WebMVC.Controllers
             try
             {
                 var countCandidate = await _context.Candidates.CountAsync();
+                
                 var newCandidate = new Candidate
                 {
                     Position = ++countCandidate,
-
+                    FullName = candidate.FullName,
+                    Name = GetNameFromFullname(candidate.FullName),
+                    Email = candidate.Email,
+                    Phone = candidate.Phone,
+                    Gender = candidate.Gender,
+                    DateOfBirth = candidate.DateOfBirth,
+                    Occupation = candidate.Occupation
                 };
                 //candidate.Position = ++countCandidate;
                 //candidate.GetNameFromFullname(candidate.FullName);
-                newCandidate.GetNameFromFullname(candidate.FullName);
+                
+                //newCandidate.GetNameFromFullname(candidate.FullName);
                 _context.Candidates.Add(newCandidate);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Create));
@@ -92,6 +100,19 @@ namespace ApplicationDevelopment.WebMVC.Controllers
             }
             ViewBag.Occupations = DataHelper.GetOccupationSelectList();
             return View(nameof(Create), candidateVM);
+        }
+        
+        public string GetNameFromFullname(string fullName)
+        {
+            var name = "";
+            string[] arrayString = fullName.Split(' ');
+            if (arrayString != null && arrayString.Length > 0)
+            {
+                int lastIndex = arrayString.Length - 1;
+                name = arrayString[lastIndex];
+                
+            }
+            return name;
         }
     }
 }
